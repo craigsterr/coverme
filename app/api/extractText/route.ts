@@ -5,6 +5,7 @@ import pdf from "pdf-parse";
 import { Buffer } from "buffer";
 
 export async function POST(req: Request) {
+  console.log("POST /api/extractText route hit");
   try {
     const formData = await req.formData();
     const file = formData.get("pdf") as File;
