@@ -1,29 +1,31 @@
+"use server";
+export const runtime = "nodejs";
+
+import { NextResponse } from "next/server";
 import pdf from "pdf-parse";
 
 export async function POST(req: Request) {
   try {
     const formData = await req.formData();
-    const file = formData.get("pdf");
+    const file = formData.get("pdf") as File;
 
-    if (!file || !(file instanceof Blob)) {
-      return new Response(JSON.stringify({ error: "No valid file uploaded" }), {
-        status: 400,
-        headers: { "Content-Type": "application/json" },
-      });
+    if (!file) {
+      return NextResponse.json({ error: "No file provided" }, { status: 500 });
     }
 
-    const buffer = Buffer.from(await file.arrayBuffer());
-    const data = await pdf(buffer);
+    const arrayBuffer = await file.arrayBuffer();
+    const dataBuffer = Buffer.from(arrayBuffer);
+    const data = await pdf(dataBuffer);
 
-    return new Response(JSON.stringify({ text: data.text }), {
-      status: 200,
-      headers: { "Content-Type": "application/json" },
+    return NextResponse.json({
+      message: "PDF processed successfully",
+      text: data.text,
     });
-  } catch (err) {
-    console.error("Error parsing PDF:", err);
-    return new Response(JSON.stringify({ error: "PDF parsing failed" }), {
-      status: 500,
-      headers: { "Content-Type": "application/json" },
-    });
+  } catch (error) {
+    console.error("Error processing PDF:", error);
+    return NextResponse.json(
+      { error: "Failed to process PDF" },
+      { status: 500 }
+    );
   }
 }
