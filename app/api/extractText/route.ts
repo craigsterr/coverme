@@ -2,6 +2,7 @@ export const runtime = "nodejs";
 
 import { NextResponse } from "next/server";
 import pdf from "pdf-parse";
+import { Buffer } from "buffer";
 
 export async function POST(req: Request) {
   try {
