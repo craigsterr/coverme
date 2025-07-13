@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Image from "next/image";
+import { Analytics } from "@vercel/analytics/next";
 
 export default function Home() {
   type Job = {
@@ -178,187 +179,190 @@ export default function Home() {
   };
 
   return (
-    <main className="py-20 px-4 bg-stone-950 text-white min-h-screen items-center flex flex-col">
-      <div className="max-w-4xl mx-auto text-center space-y-4">
-        <div className="flex items-center">
-          <h1 className="text-6xl font-bold text-white">CoverMe</h1>
-          <Image
-            width={75}
-            height={75}
-            src="/logo.png"
-            alt="CoverMe Logo"
-            className="mx-auto"
-          />
-        </div>
-        <p className="text-lg text-gray-400">
-          An AI Cover Letter Generator by Craig Ondevilla
-        </p>
-      </div>
-
-      <section className={`${sectionCard} bg-gray-900 text-white mt-8`}>
-        <h2 className="text-xl font-semibold mb-4">Resume Upload</h2>
-        <label className="block mb-2 font-medium text-green-600 highlight">
-          Step 1: Upload your resume! (PDF format only)
-        </label>
-        <label className="inline-block cursor-pointer px-4 py-2 bg-gray-800 hover:bg-gray-700 text-white rounded-md font-medium">
-          Choose File
-          <input
-            type="file"
-            accept="application/pdf"
-            onChange={handleFileChange}
-            className="hidden"
-          />
-        </label>
-        {file && (
-          <p className="mt-2 text-gray-400 text-sm">Selected: {file.name}</p>
-        )}
-        <div className="mt-4 flex gap-4">
-          <button
-            disabled={resumeLoading || !file}
-            onClick={handleUpload}
-            className={buttonStyle}
-          >
-            {resumeLoading ? "Uploading..." : "Upload"}
-          </button>
-        </div>
-        {error && <p className="text-red-500 mt-2">{error}</p>}
-        {parsedText && (
-          <div className="mt-4 mb-4">
-            <h3 className="font-semibold mb-2">Parsed Resume Text</h3>
-            <pre className="text-sm bg-gray-800 p-3 rounded max-h-60 overflow-y-auto">
-              {parsedText}
-            </pre>
-            <p className="text-sm text-gray-400 mt-1">
-              Length: {parsedText.length} characters
-            </p>
+    <>
+      <Analytics />
+      <main className="py-20 px-4 bg-stone-950 text-white min-h-screen items-center flex flex-col">
+        <div className="max-w-4xl mx-auto text-center space-y-4">
+          <div className="flex items-center">
+            <h1 className="text-6xl font-bold text-white">CoverMe</h1>
+            <Image
+              width={75}
+              height={75}
+              src="/logo.png"
+              alt="CoverMe Logo"
+              className="mx-auto"
+            />
           </div>
-        )}
-        {parsedText && (
-          <>
-            <p className="mb-4 text-green-600">
-              Step 2: Summarize your resume with AI!
-            </p>
+          <p className="text-lg text-gray-400">
+            An AI Cover Letter Generator by Craig Ondevilla
+          </p>
+        </div>
+
+        <section className={`${sectionCard} bg-gray-900 text-white mt-8`}>
+          <h2 className="text-xl font-semibold mb-4">Resume Upload</h2>
+          <label className="block mb-2 font-medium text-green-600 highlight">
+            Step 1: Upload your resume! (PDF format only)
+          </label>
+          <label className="inline-block cursor-pointer px-4 py-2 bg-gray-800 hover:bg-gray-700 text-white rounded-md font-medium">
+            Choose File
+            <input
+              type="file"
+              accept="application/pdf"
+              onChange={handleFileChange}
+              className="hidden"
+            />
+          </label>
+          {file && (
+            <p className="mt-2 text-gray-400 text-sm">Selected: {file.name}</p>
+          )}
+          <div className="mt-4 flex gap-4">
             <button
-              disabled={summarizeLoading}
-              onClick={handleSummarizeText}
+              disabled={resumeLoading || !file}
+              onClick={handleUpload}
               className={buttonStyle}
             >
-              {summarizeLoading ? "Summarizing..." : "Summarize Resume"}
+              {resumeLoading ? "Uploading..." : "Upload"}
             </button>
-          </>
-        )}
+          </div>
+          {error && <p className="text-red-500 mt-2">{error}</p>}
+          {parsedText && (
+            <div className="mt-4 mb-4">
+              <h3 className="font-semibold mb-2">Parsed Resume Text</h3>
+              <pre className="text-sm bg-gray-800 p-3 rounded max-h-60 overflow-y-auto">
+                {parsedText}
+              </pre>
+              <p className="text-sm text-gray-400 mt-1">
+                Length: {parsedText.length} characters
+              </p>
+            </div>
+          )}
+          {parsedText && (
+            <>
+              <p className="mb-4 text-green-600">
+                Step 2: Summarize your resume with AI!
+              </p>
+              <button
+                disabled={summarizeLoading}
+                onClick={handleSummarizeText}
+                className={buttonStyle}
+              >
+                {summarizeLoading ? "Summarizing..." : "Summarize Resume"}
+              </button>
+            </>
+          )}
+          {summarizedText && (
+            <div className="mt-4">
+              <h3 className="font-semibold">Resume Summary</h3>
+              <p className="mb-2 italic text-gray-400">(Edit if needed)</p>
+              <textarea
+                value={summarizedText}
+                onChange={(e) => setSummarizedText(e.target.value)}
+                maxLength={1000}
+                rows={6}
+                className="w-full p-3 border border-gray-700 bg-gray-800 rounded-md text-sm"
+              />
+              <p className="text-sm text-gray-400 mt-1">
+                {summarizedText.length} / 1000 characters
+              </p>
+            </div>
+          )}
+        </section>
         {summarizedText && (
-          <div className="mt-4">
-            <h3 className="font-semibold">Resume Summary</h3>
-            <p className="mb-2 italic text-gray-400">(Edit if needed)</p>
+          <section className={`${sectionCard} bg-gray-900 text-white mt-8`}>
+            <h2 className="text-xl font-semibold mb-4">Job Description</h2>
+            <p className="mb-4 text-green-600">
+              Step 3: Paste a job description you’re applying to (from LinkedIn,
+              Indeed, etc.).
+            </p>
+            <input
+              type="text"
+              value={jobTitleInput}
+              onChange={(e) => setJobTitleInput(e.target.value)}
+              placeholder="Job Title (Optional)"
+              maxLength={100}
+              className="w-full mb-2 p-2 border border-gray-700 bg-gray-800 rounded-md text-sm"
+            />
+            <input
+              type="text"
+              value={companyNameInput}
+              onChange={(e) => setCompanyNameInput(e.target.value)}
+              placeholder="Company Name (Optional)"
+              maxLength={100}
+              className="w-full mb-2 p-2 border border-gray-700 bg-gray-800 rounded-md text-sm"
+            />
             <textarea
-              value={summarizedText}
-              onChange={(e) => setSummarizedText(e.target.value)}
-              maxLength={1000}
+              value={jobDescriptionInput}
+              onChange={(e) => setJobDescriptionInput(e.target.value)}
+              placeholder="Paste full job description..."
+              maxLength={4000}
               rows={6}
-              className="w-full p-3 border border-gray-700 bg-gray-800 rounded-md text-sm"
+              className="w-full p-2 border border-gray-700 bg-gray-800 rounded-md text-sm"
             />
             <p className="text-sm text-gray-400 mt-1">
-              {summarizedText.length} / 1000 characters
+              {jobDescriptionInput.length} / 4000 characters
             </p>
-          </div>
+            <button onClick={handleSubmitJob} className={`${buttonStyle} mt-3`}>
+              Add Job
+            </button>
+          </section>
         )}
-      </section>
-      {summarizedText && (
-        <section className={`${sectionCard} bg-gray-900 text-white mt-8`}>
-          <h2 className="text-xl font-semibold mb-4">Job Description</h2>
-          <p className="mb-4 text-green-600">
-            Step 3: Paste a job description you’re applying to (from LinkedIn,
-            Indeed, etc.).
-          </p>
-          <input
-            type="text"
-            value={jobTitleInput}
-            onChange={(e) => setJobTitleInput(e.target.value)}
-            placeholder="Job Title (Optional)"
-            maxLength={100}
-            className="w-full mb-2 p-2 border border-gray-700 bg-gray-800 rounded-md text-sm"
-          />
-          <input
-            type="text"
-            value={companyNameInput}
-            onChange={(e) => setCompanyNameInput(e.target.value)}
-            placeholder="Company Name (Optional)"
-            maxLength={100}
-            className="w-full mb-2 p-2 border border-gray-700 bg-gray-800 rounded-md text-sm"
-          />
-          <textarea
-            value={jobDescriptionInput}
-            onChange={(e) => setJobDescriptionInput(e.target.value)}
-            placeholder="Paste full job description..."
-            maxLength={4000}
-            rows={6}
-            className="w-full p-2 border border-gray-700 bg-gray-800 rounded-md text-sm"
-          />
-          <p className="text-sm text-gray-400 mt-1">
-            {jobDescriptionInput.length} / 4000 characters
-          </p>
-          <button onClick={handleSubmitJob} className={`${buttonStyle} mt-3`}>
-            Add Job
-          </button>
-        </section>
-      )}
 
-      {jobs.length != 0 && (
-        <section className={`${sectionCard} bg-gray-900 text-white mt-8`}>
-          <h2 className="text-xl font-semibold mb-4">Generated Letters</h2>
-          <p className="mb-4 text-green-600">
-            Step 4: Generate cover letters for each job!
-          </p>
-          <button
-            className={buttonStyle + "mb-4"}
-            onClick={handleGenerateCoverLetters}
-            disabled={coverLettersLoading || !addNew || !summarizedText}
-          >
-            {coverLettersLoading ? "Generating..." : "Generate Cover Letters"}
-          </button>
-          {jobs.map((job, i) => (
-            <div
-              key={i}
-              className="border border-gray-700 rounded-lg p-4 mb-4 mt-4"
+        {jobs.length != 0 && (
+          <section className={`${sectionCard} bg-gray-900 text-white mt-8`}>
+            <h2 className="text-xl font-semibold mb-4">Generated Letters</h2>
+            <p className="mb-4 text-green-600">
+              Step 4: Generate cover letters for each job!
+            </p>
+            <button
+              className={buttonStyle + "mb-4"}
+              onClick={handleGenerateCoverLetters}
+              disabled={coverLettersLoading || !addNew || !summarizedText}
             >
-              <h3 className="font-semibold mb-2 text-lg">
-                {job.title || "Untitled Role"} @{" "}
-                {job.company || "Unknown Company"}
-              </h3>
-              <pre className="text-sm p-3 rounded border border-gray-700 bg-gray-800 max-h-60 overflow-y-auto mb-2">
-                {job.description}
-              </pre>
+              {coverLettersLoading ? "Generating..." : "Generate Cover Letters"}
+            </button>
+            {jobs.map((job, i) => (
+              <div
+                key={i}
+                className="border border-gray-700 rounded-lg p-4 mb-4 mt-4"
+              >
+                <h3 className="font-semibold mb-2 text-lg">
+                  {job.title || "Untitled Role"} @{" "}
+                  {job.company || "Unknown Company"}
+                </h3>
+                <pre className="text-sm p-3 rounded border border-gray-700 bg-gray-800 max-h-60 overflow-y-auto mb-2">
+                  {job.description}
+                </pre>
 
-              {coverLetterLoading[i] ? (
-                <p className="text-gray-400">Generating cover letter...</p>
-              ) : (
-                <p className="text-gray-400">
-                  {coverLetters[i]
-                    ? "Cover letter generated!"
-                    : "Click 'Generate Cover Letters' to create."}
-                </p>
-              )}
-              {coverLetters[i] && (
-                <>
-                  <pre className="text-sm mt-4 p-3 rounded border border-gray-700 bg-gray-800 max-h-60 overflow-y-auto whitespace-pre-wrap">
-                    {coverLetters[i]}
-                  </pre>
-                  <button
-                    onClick={() => {
-                      copyText(coverLetters[i]);
-                      setCopyTexts((prev) => ({ ...prev, [i]: true }));
-                    }}
-                    className={`${buttonStyle} mt-2`}
-                  >
-                    {copyTexts[i] ? "Copied!" : "Copy to Clipboard"}
-                  </button>
-                </>
-              )}
-            </div>
-          ))}
-        </section>
-      )}
-    </main>
+                {coverLetterLoading[i] ? (
+                  <p className="text-gray-400">Generating cover letter...</p>
+                ) : (
+                  <p className="text-gray-400">
+                    {coverLetters[i]
+                      ? "Cover letter generated!"
+                      : "Click 'Generate Cover Letters' to create."}
+                  </p>
+                )}
+                {coverLetters[i] && (
+                  <>
+                    <pre className="text-sm mt-4 p-3 rounded border border-gray-700 bg-gray-800 max-h-60 overflow-y-auto whitespace-pre-wrap">
+                      {coverLetters[i]}
+                    </pre>
+                    <button
+                      onClick={() => {
+                        copyText(coverLetters[i]);
+                        setCopyTexts((prev) => ({ ...prev, [i]: true }));
+                      }}
+                      className={`${buttonStyle} mt-2`}
+                    >
+                      {copyTexts[i] ? "Copied!" : "Copy to Clipboard"}
+                    </button>
+                  </>
+                )}
+              </div>
+            ))}
+          </section>
+        )}
+      </main>
+    </>
   );
 }
