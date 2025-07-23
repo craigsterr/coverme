@@ -7,7 +7,7 @@ import Resume from "@/components/custom/Resume";
 import JobInput from "@/components/custom/JobInput";
 import JobList from "@/components/custom/JobList";
 import NavBar from "@/components/custom/NavBar";
-// import Footer from "@/components/custom/Footer";
+import Footer from "@/components/custom/Footer";
 
 export default function Home() {
   type Job = {
@@ -39,8 +39,11 @@ export default function Home() {
   return (
     <>
       <Analytics />
-      <NavBar />
-      <div className="h-10"></div>
+      <div className="flex justify-center">
+        <NavBar />
+      </div>
+
+      <div className="mb-15"></div>
       <main className="py-20 px-4 bg-stone-950 text-white min-h-screen items-center flex flex-col">
         <Hero lettersGenerated={lettersGenerated} />
         <Resume
@@ -68,6 +71,7 @@ export default function Home() {
           sectionCard={sectionCard}
         />
       </main>
+      <Footer />
     </>
   );
 }

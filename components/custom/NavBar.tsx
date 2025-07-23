@@ -8,15 +8,19 @@ import { usePathname } from "next/navigation";
 export default function NavBar() {
   const [isOpen, setIsOpen] = useState(false);
   const pathname = usePathname();
+  const textColor = "text-white/75";
   const linkStyle = ` text-lg lg:text-xl font-medium px-2 py-1 rounded-2xl ${
     pathname === "/contact"
-      ? "bg-gray-300 text-black"
-      : "my-auto text-white/75 bg-gray-300/0 hover:bg-white/75 transition-all duration-300 hover:text-black"
+      ? `bg-gray-300 ${textColor}`
+      : `my-auto ${textColor} bg-gray-300/0 hover:bg-white/75 transition-all duration-300 hover:text-black`
   }`;
 
   return (
     <>
-      <nav className="p-2 bg-black fixed w-full mx-auto z-1">
+      <nav
+        className="fixed w-full max-w-[75%] z-10 mt-3 px-4 py-2 rounded-3xl
+                bg-white/10 backdrop-blur-md border border-white/20 shadow-xl"
+      >
         <div className="flex justify-between max-w-7xl mx-auto ">
           <div className="flex gap-2 ml-5">
             {/* <Image
@@ -27,15 +31,20 @@ export default function NavBar() {
               className="invert my-auto"
             /> */}
             <Link
-              href="#"
-              className="text-2xl lg:text-xl text-white font-bold flex items-center"
+              href="/"
+              className={
+                "text-2xl lg:text-xl font-bold flex items-center " + textColor
+              }
             >
               coverme
             </Link>
           </div>
           {/* Menu toggle button - visible on small screens */}
           <button
-            className="text-xl md:hidden bg-transparent cursor-pointer text-white"
+            className={
+              "text-xl md:hidden bg-transparent cursor-pointer mr-5 " +
+              textColor
+            }
             onClick={() => setIsOpen(!isOpen)}
             aria-label="Toggle menu"
           >
