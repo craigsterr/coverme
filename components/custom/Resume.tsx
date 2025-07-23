@@ -19,7 +19,7 @@ export default function Resume({
   const [parsedText, setParsedText] = useState<string | null>(null);
   const [summarizeLoading, setSummarizeLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [specifications, setSpecifications] = useState("");
+  // const [specifications, setSpecifications] = useState("");
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFile = e.target.files?.[0] ?? null;
@@ -98,16 +98,16 @@ export default function Resume({
     const saveSummary = localStorage.getItem("summary");
     if (saveSummary) setSummarizedText(saveSummary);
 
-    const saveSpecifications = localStorage.getItem("specifications");
-    if (saveSpecifications) setSpecifications(saveSpecifications);
+    // const saveSpecifications = localStorage.getItem("specifications");
+    // if (saveSpecifications) setSpecifications(saveSpecifications);
   }, []);
 
   useEffect(() => {
     localStorage.setItem("file-name", fileName || "");
     localStorage.setItem("parsed-text", parsedText || "");
     localStorage.setItem("summary", summarizedText || "");
-    localStorage.setItem("specifications", specifications || "");
-  }, [fileName, parsedText, summarizedText, specifications]);
+    // localStorage.setItem("specifications", specifications || "");
+  }, [fileName, parsedText, summarizedText]);
 
   return (
     <section className={`${sectionCard} bg-gray-900 text-white mt-8`}>
@@ -176,7 +176,7 @@ export default function Resume({
           <p className="text-sm text-gray-400 mt-1">
             {summarizedText.length} / 1000 characters
           </p>
-          <textarea
+          {/* <textarea
             value={specifications}
             onChange={(e) => setSpecifications(e.target.value)}
             placeholder="Specifications (Optional)"
@@ -186,7 +186,7 @@ export default function Resume({
           />
           <p className="text-sm text-gray-400 mt-1">
             {specifications.length} / 250 characters
-          </p>
+          </p> */}
         </div>
       )}
     </section>
