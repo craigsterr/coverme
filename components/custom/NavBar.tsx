@@ -18,8 +18,8 @@ export default function NavBar() {
   return (
     <>
       <nav
-        className="fixed w-full max-w-[75%] z-10 mt-3 px-4 py-2 rounded-3xl
-                bg-white/10 backdrop-blur-md border border-white/20 shadow-xl"
+        className="fixed w-full max-w-[75%] z-10 mt-3 px-4 py-2 rounded-3xl border
+                border-white/20 shadow-xl bg-gradient-to-br from-white/20 via-white/5 to-white/10 backdrop-blur-md"
       >
         <div className="flex justify-between max-w-7xl mx-auto ">
           <div className="flex gap-2 ml-5">

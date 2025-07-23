@@ -58,6 +58,20 @@ body {
   overflow-y: scroll;
 }
 
+@keyframes marquee {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-marquee {
+  display: inline-block;
+  animation: marquee 20s linear infinite;
+}
+
 @layer base {
   * {
     @apply tracking-wide text-lg;

@@ -8,6 +8,7 @@ import JobInput from "@/components/custom/JobInput";
 import JobList from "@/components/custom/JobList";
 import NavBar from "@/components/custom/NavBar";
 import Footer from "@/components/custom/Footer";
+import "animate.css";
 
 export default function Home() {
   type Job = {
@@ -24,7 +25,7 @@ export default function Home() {
   const buttonStyle =
     "px-3 py-1 bg-sky-600 text-white rounded-md hover:bg-sky-700 transition-all disabled:opacity-50 disabled:cursor-not-allowed";
   const sectionCard =
-    "w-full max-w-3xl bg-zinc-900 border border-stone-700 rounded-xl p-6 shadow";
+    "w-full max-w-3xl bg-zinc-900 border border-stone-700 rounded-xl p-6 shadow ";
 
   useEffect(() => {
     const savedLettersGenerated = localStorage.getItem("letters-generated");
