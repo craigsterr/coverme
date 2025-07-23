@@ -1,0 +1,77 @@
+"use client";
+import "animate.css";
+
+import { useState } from "react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+// import Image from "next/image";
+export default function NavBar() {
+  const [isOpen, setIsOpen] = useState(false);
+  const pathname = usePathname();
+  const linkStyle = ` text-lg lg:text-xl font-medium px-2 py-1 rounded-2xl ${
+    pathname === "/contact"
+      ? "bg-gray-300 text-black"
+      : "my-auto text-white/75 bg-gray-300/0 hover:bg-white/75 transition-all duration-300 hover:text-black"
+  }`;
+
+  return (
+    <>
+      <nav className="p-2 bg-black fixed w-full mx-auto z-1">
+        <div className="flex justify-between max-w-7xl mx-auto ">
+          <div className="flex gap-2 ml-5">
+            {/* <Image
+              src={"/logo.png"}
+              alt={"logo"}
+              width={25}
+              height={50}
+              className="invert my-auto"
+            /> */}
+            <Link
+              href="#"
+              className="text-2xl lg:text-xl text-white font-bold flex items-center"
+            >
+              coverme
+            </Link>
+          </div>
+          {/* Menu toggle button - visible on small screens */}
+          <button
+            className="text-xl md:hidden bg-transparent cursor-pointer text-white"
+            onClick={() => setIsOpen(!isOpen)}
+            aria-label="Toggle menu"
+          >
+            ☰
+          </button>
+
+          {/* Navigation links */}
+          <div
+            className={`${
+              isOpen ? "flex animate__animated animate__fadeInDown" : "hidden"
+            } flex-col gap-2 mt-4 md:flex md:flex-row md:gap-4 md:mt-0 mr-5`}
+          >
+            <Link
+              href="#upload"
+              className={linkStyle}
+              onClick={() => setIsOpen(false)}
+            >
+              upload
+            </Link>
+            <Link
+              href="#add-job"
+              className={linkStyle}
+              onClick={() => setIsOpen(false)}
+            >
+              add job
+            </Link>
+            <Link
+              href="#jobs"
+              className={linkStyle}
+              onClick={() => setIsOpen(false)}
+            >
+              jobs
+            </Link>
+          </div>
+        </div>
+      </nav>
+    </>
+  );
+}

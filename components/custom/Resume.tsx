@@ -110,7 +110,10 @@ export default function Resume({
   }, [fileName, parsedText, summarizedText]);
 
   return (
-    <section className={`${sectionCard} bg-gray-900 text-white mt-8`}>
+    <section
+      id="upload"
+      className={`${sectionCard} bg-gray-900 text-white mt-8`}
+    >
       <h2 className="text-xl font-semibold mb-4">Resume Upload</h2>
       <label className="block mb-2 font-medium text-green-600 highlight">
         Step 1: Upload your resume! (PDF format only)
@@ -140,7 +143,7 @@ export default function Resume({
       {parsedText && (
         <div className="mt-4 mb-4">
           <h3 className="font-semibold mb-2">Parsed Resume Text</h3>
-          <pre className="text-sm bg-gray-800 p-3 rounded max-h-60 overflow-y-auto">
+          <pre className="text-sm bg-gray-800 p-3 rounded max-h-60 overflow-y-auto whitespace-pre-wrap">
             {parsedText}
           </pre>
           <p className="text-sm text-gray-400 mt-1">

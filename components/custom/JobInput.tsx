@@ -49,7 +49,10 @@ export default function JobInput({
   return (
     <>
       {summarizedText && (
-        <section className={`${sectionCard} bg-gray-900 text-white mt-8`}>
+        <section
+          id="add-job"
+          className={`${sectionCard} bg-gray-900 text-white mt-8`}
+        >
           <h2 className="text-xl font-semibold mb-4">Job Description</h2>
           <p className="mb-4 text-green-600">
             Step 3: Paste a job description you’re applying to (from LinkedIn,

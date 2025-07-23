@@ -10,7 +10,7 @@ export default function Hero({ lettersGenerated }: Props) {
   return (
     <div className="max-w-4xl mx-auto text-center space-y-4">
       <div className="flex flex-row items-center justify-center gap-3">
-        <h1 className="text-6xl font-bold text-white">CoverMe</h1>
+        <h1 className="text-5xl sm:text-6xl font-bold text-white">CoverMe</h1>
         <Image width={75} height={75} src="/logo.png" alt="CoverMe Logo" />
       </div>
       {lettersGenerated ? (

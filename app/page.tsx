@@ -6,6 +6,8 @@ import Hero from "@/components/custom/Hero";
 import Resume from "@/components/custom/Resume";
 import JobInput from "@/components/custom/JobInput";
 import JobList from "@/components/custom/JobList";
+import NavBar from "@/components/custom/NavBar";
+// import Footer from "@/components/custom/Footer";
 
 export default function Home() {
   type Job = {
@@ -20,9 +22,9 @@ export default function Home() {
   const [addNew, setAddNew] = useState<boolean>(false);
 
   const buttonStyle =
-    "px-4 py-2 bg-sky-600 text-white rounded-md hover:bg-sky-700 transition-all disabled:opacity-50 disabled:cursor-not-allowed";
+    "px-3 py-1 bg-sky-600 text-white rounded-md hover:bg-sky-700 transition-all disabled:opacity-50 disabled:cursor-not-allowed";
   const sectionCard =
-    "w-full max-w-2xl bg-zinc-900 border border-stone-700 rounded-xl p-6 shadow";
+    "w-full max-w-3xl bg-zinc-900 border border-stone-700 rounded-xl p-6 shadow";
 
   useEffect(() => {
     const savedLettersGenerated = localStorage.getItem("letters-generated");
@@ -37,6 +39,8 @@ export default function Home() {
   return (
     <>
       <Analytics />
+      <NavBar />
+      <div className="h-10"></div>
       <main className="py-20 px-4 bg-stone-950 text-white min-h-screen items-center flex flex-col">
         <Hero lettersGenerated={lettersGenerated} />
         <Resume

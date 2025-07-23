@@ -40,6 +40,7 @@ export default function JobList({
   );
   const [copyTexts, setCopyTexts] = useState<{ [key: number]: boolean }>({});
   const [fullName, setFullName] = useState<string>("");
+  const [fullNameInput, setFullNameInput] = useState<string>("");
 
   const handleGenerateCoverLetter = async (job: Job, index: number) => {
     if (!summarizedText) return alert("Please summarize your resume first.");
@@ -138,20 +139,15 @@ export default function JobList({
   return (
     <>
       {jobs.length != 0 && (
-        <section className={`${sectionCard} bg-gray-900 text-white mt-8`}>
+        <section
+          id="jobs"
+          className={`${sectionCard} bg-gray-900 text-white mt-8`}
+        >
           <div className="pb-5">
-            <h2 className="text-xl font-semibold mb-4">Generated Letters</h2>
+            <h2 className="text-xl font-semibold mb-4 ">Generated Letters</h2>
             <p className="mb-4 text-green-600">
               Step 4: Generate cover letters for each job!
             </p>
-            <input
-              type="text"
-              value={fullName}
-              onChange={(e) => setFullName(e.target.value)}
-              placeholder="Your full name (for PDF download)"
-              maxLength={100}
-              className="w-full mb-4 p-2 border border-gray-700 bg-gray-800 rounded-md text-sm"
-            />
             <div className="flex gap-5 sm:flex-row flex-col">
               <button
                 className={buttonStyle + "mb-4"}
@@ -167,7 +163,35 @@ export default function JobList({
               </button>
             </div>
           </div>
-          <div className="max-h-[100vh] overflow-y-auto px-10 bg-stone-950 rounded-2xl">
+          <div className="mb-5">
+            <p className="mb-4 text-yellow-600">
+              Optional: Add your full name to add as a header for your
+              downloadable cover letter PDF!
+            </p>
+            <div className="flex lg-flex-row gap-4 items-center mb-2">
+              <input
+                type="text"
+                value={fullNameInput}
+                onChange={(e) => setFullNameInput(e.target.value)}
+                placeholder="Your full name for PDF header (optional)"
+                maxLength={100}
+                className="w-[100%] sm:w-sm p-2 border border-gray-700 bg-gray-800 rounded-md text-sm"
+              />
+              <button
+                className={buttonStyle}
+                onClick={() => {
+                  setFullName(fullNameInput);
+                  setFullNameInput("");
+                }}
+              >
+                <span className="sm:hidden">Submit</span>
+                <span className="hidden sm:inline">Submit Name</span>{" "}
+              </button>
+            </div>
+            <p className="opacity-50 text-sm">Name: {fullName}</p>
+          </div>
+
+          <div className=" scrollbar-always max-h-[100vh] overflow-y-auto px-10 bg-stone-950 rounded-2xl ">
             {jobs.map((job, i) => (
               <div
                 key={i}
@@ -196,7 +220,7 @@ export default function JobList({
                       defaultValue={coverLetters[i]}
                       className="text-sm mt-4 p-3 rounded border border-gray-700 bg-gray-800 h-75 overflow-y-auto whitespace-pre-wrap"
                     ></textarea>
-                    <div className="flex justify-center gap-5">
+                    <div className="flex flex-col sm:flex-row justify-center sm:gap-5">
                       <button
                         onClick={() => {
                           copyText(coverLetters[i]);

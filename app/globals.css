@@ -51,6 +51,11 @@ body {
 
 * {
   font-family: "Neue Haas Grotesk Display", sans-serif;
+  scroll-behavior: smooth;
+}
+
+.scrollbar-always {
+  overflow-y: scroll;
 }
 
 @layer base {
