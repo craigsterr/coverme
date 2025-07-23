@@ -40,7 +40,7 @@ export default function Home() {
       <main className="py-20 px-4 bg-stone-950 text-white min-h-screen items-center flex flex-col">
         <Hero lettersGenerated={lettersGenerated} />
         <Resume
-          summarizedText={summarizedText}
+          summarizedText={summarizedText ?? ""}
           setSummarizedText={setSummarizedText}
           buttonStyle={buttonStyle}
           sectionCard={sectionCard}
@@ -48,7 +48,7 @@ export default function Home() {
         <JobInput
           setAddNew={setAddNew}
           setJobs={setJobs}
-          summarizedText={summarizedText}
+          summarizedText={summarizedText ?? ""}
           buttonStyle={buttonStyle}
           sectionCard={sectionCard}
         />
@@ -56,7 +56,7 @@ export default function Home() {
           jobs={jobs}
           setJobs={setJobs}
           setLettersGenerated={setLettersGenerated}
-          summarizedText={summarizedText}
+          summarizedText={summarizedText ?? ""}
           setSummarizedText={setSummarizedText}
           addNew={addNew}
           setAddNew={setAddNew}
