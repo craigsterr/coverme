@@ -27,7 +27,7 @@ body {
 
 @font-face {
   font-family: "Neue Haas Grotesk Display";
-  src: url("/fonts/NeueHaasDisplayThin.ttf");
+  src: url("/fonts/NeueHaasDisplayLight.ttf");
   font-weight: 100;
   font-style: normal;
   font-display: swap;
