@@ -1,4 +1,7 @@
 import { useState, useEffect } from "react";
+import { Sparkles } from "lucide-react"; // Add this at the top of your file
+import SectionCard from "./SectionCard";
+import confetti from "canvas-confetti";
 
 type Props = {
   summarizedText: string;
@@ -85,7 +88,16 @@ export default function Resume({
       return;
     }
 
+    fireConfetti();
     setSummarizedText(data.text || "");
+  };
+
+  const fireConfetti = () => {
+    confetti({
+      particleCount: 40,
+      spread: 80,
+      origin: { y: 0.6 },
+    });
   };
 
   useEffect(() => {
@@ -114,72 +126,81 @@ export default function Resume({
       id="upload"
       className={`${sectionCard} bg-gray-900 text-white mt-8`}
     >
-      <h2 className="text-xl font-semibold mb-4">Resume Upload</h2>
-      <label className="block mb-2 font-medium text-green-600 highlight">
-        Step 1: Upload your resume! (PDF format only)
-      </label>
-      <label className="inline-block cursor-pointer px-4 py-2 bg-gray-800 hover:bg-gray-700 text-white rounded-md font-medium">
-        Choose File
-        <input
-          type="file"
-          accept="application/pdf"
-          onChange={handleFileChange}
-          className="hidden"
-        />
-      </label>
-      {(file || parsedText) && (
-        <p className="mt-2 text-gray-400 text-sm">Selected: {fileName || ""}</p>
-      )}
-      <div className="mt-4 flex gap-4">
-        <button
-          disabled={resumeLoading || !file}
-          onClick={handleUpload}
-          className={buttonStyle}
-        >
-          {resumeLoading ? "Uploading..." : "Upload"}
-        </button>
-      </div>
-      {error && <p className="text-red-500 mt-2">{error}</p>}
-      {parsedText && (
-        <div className="mt-4 mb-4">
-          <h3 className="font-semibold mb-2">Parsed Resume Text</h3>
-          <pre className="text-sm bg-gray-800 p-3 rounded max-h-60 overflow-y-auto whitespace-pre-wrap">
-            {parsedText}
-          </pre>
-          <p className="text-sm text-gray-400 mt-1">
-            Length: {parsedText.length} characters
+      <SectionCard title="Resume Upload">
+        <label className="block mb-2 font-medium text-green-600 highlight">
+          Step 1: Upload your resume! (PDF format only)
+        </label>
+        <label className="inline-block cursor-pointer px-4 py-2 bg-gray-800 hover:bg-gray-700 text-white rounded-md font-medium">
+          Choose File
+          <input
+            type="file"
+            accept="application/pdf"
+            onChange={handleFileChange}
+            className="hidden"
+          />
+        </label>
+        {(file || parsedText) && (
+          <p className="mt-2 text-gray-400 text-sm">
+            Selected: {fileName || ""}
           </p>
-        </div>
-      )}
-      {parsedText && (
-        <>
-          <p className="mb-4 text-green-600">
-            Step 2: Summarize your resume with AI!
-          </p>
+        )}
+        <div className="mt-4 flex gap-4">
           <button
-            disabled={summarizeLoading}
-            onClick={handleSummarizeText}
+            disabled={resumeLoading || !file}
+            onClick={handleUpload}
             className={buttonStyle}
           >
-            {summarizeLoading ? "Summarizing..." : "Summarize Resume"}
+            {resumeLoading ? "Uploading..." : "Upload"}
           </button>
-        </>
-      )}
-      {summarizedText && (
-        <div className="mt-4">
-          <h3 className="font-semibold">Resume Summary</h3>
-          <p className="mb-2 italic text-gray-400">(Edit if needed)</p>
-          <textarea
-            value={summarizedText}
-            onChange={(e) => setSummarizedText(e.target.value)}
-            maxLength={1000}
-            rows={6}
-            className="w-full p-3 border border-gray-700 bg-gray-800 rounded-md text-sm"
-          />
-          <p className="text-sm text-gray-400 mt-1">
-            {summarizedText.length} / 1000 characters
-          </p>
-          {/* <textarea
+        </div>
+        {error && <p className="text-red-500 mt-2">{error}</p>}
+        {parsedText && (
+          <div className="mt-4 mb-4">
+            <h3 className="font-semibold mb-2">Parsed Resume Text</h3>
+            <pre className="text-sm bg-gray-800 p-3 rounded max-h-60 overflow-y-auto whitespace-pre-wrap">
+              {parsedText}
+            </pre>
+            <p className="text-sm text-gray-400 mt-1">
+              Length: {parsedText.length} characters
+            </p>
+          </div>
+        )}
+        {parsedText && (
+          <>
+            <p className="mb-4 text-green-600">
+              Step 2: Summarize your resume with AI!
+            </p>
+            <button
+              disabled={summarizeLoading}
+              onClick={handleSummarizeText}
+              className={`${buttonStyle} flex items-center justify-center gap-2`}
+            >
+              {summarizeLoading ? (
+                "Summarizing..."
+              ) : (
+                <>
+                  <Sparkles className="w-4 h-4 text-yellow-400 animate-pulse" />
+                  Summarize Resume
+                </>
+              )}
+            </button>{" "}
+          </>
+        )}
+        {summarizedText && (
+          <div className="mt-4">
+            <h3 className="font-semibold">Resume Summary</h3>
+            <p className="mb-2 italic text-gray-400">(Edit if needed)</p>
+            <textarea
+              value={summarizedText}
+              onChange={(e) => setSummarizedText(e.target.value)}
+              maxLength={1000}
+              rows={6}
+              className="w-full p-3 border border-gray-700 bg-gray-800 rounded-md text-sm"
+            />
+            <p className="text-sm text-gray-400 mt-1">
+              {summarizedText.length} / 1000 characters
+            </p>
+            {/* <textarea
             value={specifications}
             onChange={(e) => setSpecifications(e.target.value)}
             placeholder="Specifications (Optional)"
@@ -190,8 +211,9 @@ export default function Resume({
           <p className="text-sm text-gray-400 mt-1">
             {specifications.length} / 250 characters
           </p> */}
-        </div>
-      )}
+          </div>
+        )}
+      </SectionCard>
     </section>
   );
 }

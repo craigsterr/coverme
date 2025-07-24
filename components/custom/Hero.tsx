@@ -1,8 +1,8 @@
 "use client";
 import Image from "next/image";
-
 type Props = {
   lettersGenerated: number;
+  buttonStyle: string;
 };
 
 export default function Hero({ lettersGenerated }: Props) {
@@ -12,16 +12,11 @@ export default function Hero({ lettersGenerated }: Props) {
         <h1 className="text-5xl sm:text-6xl font-bold text-white">CoverMe</h1>
         <Image width={75} height={75} src="/logo.png" alt="CoverMe Logo" />
       </div>
-      {lettersGenerated ? (
-        <h2 className="text-2xl">
-          You&apos;ve generated {lettersGenerated} cover letters so far. Keep it
-          up!
-        </h2>
-      ) : (
-        <h2 className="text-2xl">
-          No cover letters generated. Let&apos;s get started!
-        </h2>
-      )}
+      <h2 className="text-2xl">
+        {lettersGenerated
+          ? `You've generated ${lettersGenerated} cover letters so far. Keep it up!`
+          : "No cover letters generated. Let's get started!"}
+      </h2>
       <p className="text-lg text-gray-400">
         An AI Cover Letter Generator by Craig Ondevilla
       </p>

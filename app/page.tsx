@@ -8,6 +8,7 @@ import JobInput from "@/components/custom/JobInput";
 import JobList from "@/components/custom/JobList";
 import NavBar from "@/components/custom/NavBar";
 import Footer from "@/components/custom/Footer";
+import Stats from "@/components/custom/Stats";
 import "animate.css";
 
 export default function Home() {
@@ -23,7 +24,7 @@ export default function Home() {
   const [addNew, setAddNew] = useState<boolean>(false);
 
   const buttonStyle =
-    "px-3 py-1 bg-sky-600 text-white rounded-md hover:bg-sky-700 transition-all disabled:opacity-50 disabled:cursor-not-allowed";
+    "px-3 py-1 text-white rounded-md hover:bg-sky-700 transition-all disabled:opacity-50 disabled:cursor-not-allowed rounded-3xl border border-white/20 shadow-xl bg-gradient-to-br from-white/20 via-white/5 to-white/10 cursor-pointer";
   const sectionCard =
     "w-full max-w-3xl bg-zinc-900 border border-stone-700 rounded-xl p-6 shadow ";
 
@@ -46,7 +47,7 @@ export default function Home() {
 
       <div className="mb-15"></div>
       <main className="py-20 px-4 bg-stone-950 text-white min-h-screen items-center flex flex-col">
-        <Hero lettersGenerated={lettersGenerated} />
+        <Hero lettersGenerated={lettersGenerated} buttonStyle={buttonStyle} />
         <Resume
           summarizedText={summarizedText ?? ""}
           setSummarizedText={setSummarizedText}
@@ -71,6 +72,7 @@ export default function Home() {
           buttonStyle={buttonStyle}
           sectionCard={sectionCard}
         />
+        <Stats buttonStyle={buttonStyle} sectionCard={sectionCard} />
       </main>
       <Footer />
     </>

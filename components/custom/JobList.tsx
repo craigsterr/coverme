@@ -1,5 +1,8 @@
 import { useState } from "react";
 import { jsPDF } from "jspdf";
+import SectionCard from "./SectionCard";
+import { Sparkles } from "lucide-react";
+import confetti from "canvas-confetti";
 
 type Job = {
   title: string;
@@ -83,6 +86,8 @@ export default function JobList({
       )
     );
 
+    fireConfetti();
+
     setCoverLettersLoading(false);
     setAddNew(false);
   };
@@ -136,6 +141,14 @@ export default function JobList({
     setCoverLetters([]);
   };
 
+  const fireConfetti = () => {
+    confetti({
+      particleCount: 40,
+      spread: 80,
+      origin: { y: 0.6 },
+    });
+  };
+
   return (
     <>
       {jobs.length != 0 && (
@@ -143,105 +156,107 @@ export default function JobList({
           id="jobs"
           className={`${sectionCard} bg-gray-900 text-white mt-8`}
         >
-          <div className="pb-5">
-            <h2 className="text-xl font-semibold mb-4 ">Generated Letters</h2>
-            <p className="mb-4 text-green-600">
-              Step 4: Generate cover letters for each job!
-            </p>
-            <div className="flex gap-5 sm:flex-row flex-col">
-              <button
-                className={buttonStyle + "mb-4"}
-                onClick={handleGenerateCoverLetters}
-                disabled={coverLettersLoading || !addNew || !summarizedText}
-              >
-                {coverLettersLoading
-                  ? "Generating..."
-                  : "Generate Cover Letters"}
-              </button>
-              <button className={buttonStyle + "mb-4"} onClick={clearJobs}>
-                Clear All
-              </button>
-            </div>
-          </div>
-          <div className="mb-5">
-            <p className="mb-4 text-yellow-600">
-              Optional: Add your full name to add as a header for your
-              downloadable cover letter PDF!
-            </p>
-            <div className="flex lg-flex-row gap-4 items-center mb-2">
-              <input
-                type="text"
-                value={fullNameInput}
-                onChange={(e) => setFullNameInput(e.target.value)}
-                placeholder="Your full name for PDF header (optional)"
-                maxLength={100}
-                className="w-[100%] sm:w-sm p-2 border border-gray-700 bg-gray-800 rounded-md text-sm"
-              />
-              <button
-                className={buttonStyle}
-                onClick={() => {
-                  setFullName(fullNameInput);
-                  setFullNameInput("");
-                }}
-              >
-                <span className="sm:hidden">Submit</span>
-                <span className="hidden sm:inline">Submit Name</span>{" "}
-              </button>
-            </div>
-            <p className="opacity-50 text-sm">Name: {fullName}</p>
-          </div>
-
-          <div className=" scrollbar-always max-h-[100vh] overflow-y-auto px-10 bg-stone-950 rounded-2xl ">
-            {jobs.map((job, i) => (
-              <div
-                key={i}
-                className="border border-gray-700 rounded-lg p-4 mb-4 mt-4"
-              >
-                <h3 className="font-semibold mb-2 text-lg">
-                  {job.title || "Untitled Role"} @{" "}
-                  {job.company || "Unknown Company"}
-                </h3>
-                <pre className="text-sm p-3 rounded border border-gray-700 bg-gray-800 max-h-60 overflow-y-auto mb-2 whitespace-pre-wrap">
-                  {job.description}
-                </pre>
-
-                {coverLetterLoading[i] ? (
-                  <p className="text-gray-400">Generating cover letter...</p>
-                ) : (
-                  <p className="text-gray-400">
-                    {coverLetters[i]
-                      ? "Cover letter generated!"
-                      : "Click 'Generate Cover Letters' to create."}
-                  </p>
-                )}
-                {coverLetters[i] && (
-                  <div className="flex flex-col">
-                    <textarea
-                      defaultValue={coverLetters[i]}
-                      className="text-sm mt-4 p-3 rounded border border-gray-700 bg-gray-800 h-75 overflow-y-auto whitespace-pre-wrap"
-                    ></textarea>
-                    <div className="flex flex-col sm:flex-row justify-center sm:gap-5">
-                      <button
-                        onClick={() => {
-                          copyText(coverLetters[i]);
-                          setCopyTexts((prev) => ({ ...prev, [i]: true }));
-                        }}
-                        className={`${buttonStyle} mt-2`}
-                      >
-                        {copyTexts[i] ? "Copied!" : "Copy to Clipboard"}
-                      </button>
-                      <button
-                        onClick={() => handleDownloadPDF(i, job)}
-                        className={`${buttonStyle} mt-2`}
-                      >
-                        {copyTexts[i] ? "Downloaded!" : "Download PDF"}
-                      </button>
-                    </div>
-                  </div>
-                )}
+          <SectionCard title="Generated Letters">
+            <div className="pb-5">
+              <p className="mb-4 text-green-600">
+                Step 4: Generate cover letters for each job!
+              </p>
+              <div className="flex gap-5 sm:flex-row flex-col">
+                <button
+                  className={buttonStyle + " mb-4 flex items-center gap-2"}
+                  onClick={handleGenerateCoverLetters}
+                  disabled={coverLettersLoading || !addNew || !summarizedText}
+                >
+                  <Sparkles className="w-4 h-4 text-yellow-400 animate-pulse" />
+                  {coverLettersLoading
+                    ? "Generating..."
+                    : "Generate Cover Letters"}
+                </button>
+                <button className={buttonStyle + " mb-4"} onClick={clearJobs}>
+                  Clear All
+                </button>
               </div>
-            ))}
-          </div>
+            </div>
+            <div className="mb-5">
+              <p className="mb-4 text-yellow-600">
+                Optional: Add your full name to add as a header for your
+                downloadable cover letter PDF!
+              </p>
+              <div className="flex lg-flex-row gap-4 items-center mb-2">
+                <input
+                  type="text"
+                  value={fullNameInput}
+                  onChange={(e) => setFullNameInput(e.target.value)}
+                  placeholder="Your full name for PDF header (optional)"
+                  maxLength={100}
+                  className="w-[100%] sm:w-sm p-2 border border-gray-700 bg-gray-800 rounded-md text-sm"
+                />
+                <button
+                  className={buttonStyle}
+                  onClick={() => {
+                    setFullName(fullNameInput);
+                    setFullNameInput("");
+                  }}
+                >
+                  <span className="sm:hidden">Submit</span>
+                  <span className="hidden sm:inline">Submit Name</span>{" "}
+                </button>
+              </div>
+              <p className="opacity-50 text-sm">Name: {fullName}</p>
+            </div>
+
+            <div className=" scrollbar-always max-h-[100vh] overflow-y-auto px-10 bg-stone-950 rounded-2xl ">
+              {jobs.map((job, i) => (
+                <div
+                  key={i}
+                  className="border border-gray-700 rounded-lg p-4 mb-4 mt-4"
+                >
+                  <h3 className="font-semibold mb-2 text-lg">
+                    {job.title || "Untitled Role"} @{" "}
+                    {job.company || "Unknown Company"}
+                  </h3>
+                  <pre className="text-sm p-3 rounded border border-gray-700 bg-gray-800 max-h-60 overflow-y-auto mb-2 whitespace-pre-wrap">
+                    {job.description}
+                  </pre>
+
+                  {coverLetterLoading[i] ? (
+                    <p className="text-gray-400">Generating cover letter...</p>
+                  ) : (
+                    <p className="text-gray-400">
+                      {coverLetters[i]
+                        ? "Cover letter generated!"
+                        : "Click 'Generate Cover Letters' to create."}
+                    </p>
+                  )}
+                  {coverLetters[i] && (
+                    <div className="flex flex-col">
+                      <textarea
+                        defaultValue={coverLetters[i]}
+                        className="text-sm mt-4 p-3 rounded border border-gray-700 bg-gray-800 h-75 overflow-y-auto whitespace-pre-wrap"
+                      ></textarea>
+                      <div className="flex flex-col sm:flex-row justify-center sm:gap-5">
+                        <button
+                          onClick={() => {
+                            copyText(coverLetters[i]);
+                            setCopyTexts((prev) => ({ ...prev, [i]: true }));
+                          }}
+                          className={`${buttonStyle} mt-2`}
+                        >
+                          {copyTexts[i] ? "Copied!" : "Copy to Clipboard"}
+                        </button>
+                        <button
+                          onClick={() => handleDownloadPDF(i, job)}
+                          className={`${buttonStyle} mt-2`}
+                        >
+                          {copyTexts[i] ? "Downloaded!" : "Download PDF"}
+                        </button>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+          </SectionCard>
         </section>
       )}
     </>
