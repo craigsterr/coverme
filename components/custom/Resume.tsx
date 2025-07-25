@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Sparkles } from "lucide-react"; // Add this at the top of your file
 import SectionCard from "./SectionCard";
 import confetti from "canvas-confetti";
+import { useResumeStore } from "@/components/custom/useResumeStore";
 
 type Props = {
   summarizedText: string;
@@ -22,7 +23,8 @@ export default function Resume({
   const [parsedText, setParsedText] = useState<string | null>(null);
   const [summarizeLoading, setSummarizeLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  // const [specifications, setSpecifications] = useState("");
+  const { fullName, setFullName } = useResumeStore();
+  const [fullNameInput, setFullNameInput] = useState<string>("");
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFile = e.target.files?.[0] ?? null;
@@ -110,16 +112,17 @@ export default function Resume({
     const saveSummary = localStorage.getItem("summary");
     if (saveSummary) setSummarizedText(saveSummary);
 
-    // const saveSpecifications = localStorage.getItem("specifications");
-    // if (saveSpecifications) setSpecifications(saveSpecifications);
+    const saveFullName = localStorage.getItem("name");
+    if (saveFullName) setFullName(saveFullName);
   }, []);
 
   useEffect(() => {
     localStorage.setItem("file-name", fileName || "");
     localStorage.setItem("parsed-text", parsedText || "");
     localStorage.setItem("summary", summarizedText || "");
+    localStorage.setItem("name", fullName || "");
     // localStorage.setItem("specifications", specifications || "");
-  }, [fileName, parsedText, summarizedText]);
+  }, [fileName, parsedText, summarizedText, fullName]);
 
   return (
     <section
@@ -200,17 +203,33 @@ export default function Resume({
             <p className="text-sm text-gray-400 mt-1">
               {summarizedText.length} / 1000 characters
             </p>
-            {/* <textarea
-            value={specifications}
-            onChange={(e) => setSpecifications(e.target.value)}
-            placeholder="Specifications (Optional)"
-            maxLength={500}
-            rows={3}
-            className="w-full p-3 border border-gray-700 bg-gray-800 rounded-md text-sm"
-          />
-          <p className="text-sm text-gray-400 mt-1">
-            {specifications.length} / 250 characters
-          </p> */}
+            <div className="mb-5 mt-2">
+              <p className="mb-4 text-yellow-600">
+                Optional: Add your full name to add as a header for your
+                downloadable cover letter PDF!
+              </p>
+              <div className="flex lg-flex-row gap-4 items-center mb-2">
+                <input
+                  type="text"
+                  value={fullNameInput}
+                  onChange={(e) => setFullNameInput(e.target.value)}
+                  placeholder="Name"
+                  maxLength={100}
+                  className="w-[100%] sm:w-sm p-2 border border-gray-700 bg-gray-800 rounded-md text-sm"
+                />
+                <button
+                  className={buttonStyle}
+                  onClick={() => {
+                    setFullName(fullNameInput);
+                    setFullNameInput("");
+                  }}
+                >
+                  <span className="sm:hidden">Submit</span>
+                  <span className="hidden sm:inline">Submit Name</span>{" "}
+                </button>
+              </div>
+              <p className="opacity-50 text-sm">Name: {fullName}</p>
+            </div>
           </div>
         )}
       </SectionCard>

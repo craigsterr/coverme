@@ -3,6 +3,7 @@ import { jsPDF } from "jspdf";
 import SectionCard from "./SectionCard";
 import { Sparkles } from "lucide-react";
 import confetti from "canvas-confetti";
+import { useResumeStore } from "@/components/custom/useResumeStore";
 
 type Job = {
   title: string;
@@ -42,8 +43,7 @@ export default function JobList({
     {}
   );
   const [copyTexts, setCopyTexts] = useState<{ [key: number]: boolean }>({});
-  const [fullName, setFullName] = useState<string>("");
-  const [fullNameInput, setFullNameInput] = useState<string>("");
+  const { fullName } = useResumeStore();
 
   const handleGenerateCoverLetter = async (job: Job, index: number) => {
     if (!summarizedText) return alert("Please summarize your resume first.");
@@ -177,39 +177,12 @@ export default function JobList({
                 </button>
               </div>
             </div>
-            <div className="mb-5">
-              <p className="mb-4 text-yellow-600">
-                Optional: Add your full name to add as a header for your
-                downloadable cover letter PDF!
-              </p>
-              <div className="flex lg-flex-row gap-4 items-center mb-2">
-                <input
-                  type="text"
-                  value={fullNameInput}
-                  onChange={(e) => setFullNameInput(e.target.value)}
-                  placeholder="Your full name for PDF header (optional)"
-                  maxLength={100}
-                  className="w-[100%] sm:w-sm p-2 border border-gray-700 bg-gray-800 rounded-md text-sm"
-                />
-                <button
-                  className={buttonStyle}
-                  onClick={() => {
-                    setFullName(fullNameInput);
-                    setFullNameInput("");
-                  }}
-                >
-                  <span className="sm:hidden">Submit</span>
-                  <span className="hidden sm:inline">Submit Name</span>{" "}
-                </button>
-              </div>
-              <p className="opacity-50 text-sm">Name: {fullName}</p>
-            </div>
 
             <div className=" scrollbar-always max-h-[100vh] overflow-y-auto px-10 bg-stone-950 rounded-2xl ">
               {jobs.map((job, i) => (
                 <div
                   key={i}
-                  className="border border-gray-700 rounded-lg p-4 mb-4 mt-4"
+                  className="border border-gray-700 bg-gray-900 rounded-lg p-4 mb-4 mt-4 transition-all duration-100 hover:scale-101 hover:-translate-x-0.5 hover:shadow-[4px_4px_0px_#000000]"
                 >
                   <h3 className="font-semibold mb-2 text-lg">
                     {job.title || "Untitled Role"} @{" "}

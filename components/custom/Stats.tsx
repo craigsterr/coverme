@@ -81,19 +81,31 @@ export default function Stats({
       localStorage.getItem("daily-jobs") || "0",
       10
     );
+    const storedDailyGoal = parseInt(
+      localStorage.getItem("daily-goal") || "0",
+      10
+    );
     const storedWeeklyJobs = parseInt(
       localStorage.getItem("weekly-jobs") || "0",
       10
     );
+    const storedWeeklyGoal = parseInt(
+      localStorage.getItem("weekly-goal") || "0",
+      10
+    );
 
     setDailyJobs(storedDailyJobs);
+    setDailyGoal(storedDailyGoal);
     setWeeklyJobs(storedWeeklyJobs);
+    setWeeklyGoal(storedWeeklyGoal);
   }, []);
 
   useEffect(() => {
     localStorage.setItem("daily-jobs", dailyJobs.toString());
+    localStorage.setItem("daily-goal", dailyGoal.toString());
     localStorage.setItem("weekly-jobs", weeklyJobs.toString());
-  }, [dailyJobs, weeklyJobs]);
+    localStorage.setItem("weekly-goal", weeklyGoal.toString());
+  }, [dailyJobs, dailyGoal, weeklyJobs, weeklyGoal]);
 
   return (
     <>
@@ -137,7 +149,7 @@ export default function Stats({
               </div>
             </div>
             <div className="h-[1px] bg-white/20 mb-4" />
-            <div className="flex flex-col sm:flex-row gap-4 sm:gap-2 items-center justify-between w-full">
+            <div className="flex flex-col sm:flex-row gap-4 sm:gap-2 items-center w-full">
               {" "}
               <div className="flex gap-2">
                 ☀️
@@ -169,8 +181,8 @@ export default function Stats({
                 <button
                   className={buttonStyle}
                   onClick={() => {
+                    setWeeklyJobs((e) => e - dailyJobs);
                     setDailyJobs(0);
-                    setWeeklyJobs(0);
                   }}
                 >
                   🗑️ Clear
