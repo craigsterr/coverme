@@ -16,6 +16,7 @@ export default function Footer() {
           <a href="https://craigo.live" className="hover:text-white">
             Craig Ondevilla
           </a>
+          <p>v2.5.1</p>
         </div>
       </div>
     </footer>

@@ -24,7 +24,7 @@ export default function Home() {
   const [addNew, setAddNew] = useState<boolean>(false);
 
   const buttonStyle =
-    "px-3 py-1 text-white rounded-md hover:bg-sky-700 transition-all disabled:opacity-50 disabled:cursor-not-allowed rounded-3xl border border-white/20 shadow-xl bg-gradient-to-br from-white/20 via-white/5 to-white/10 cursor-pointer";
+    "px-3 py-1 text-white rounded-md hover:bg-sky-700 transition-all disabled:opacity-50 disabled:cursor-not-allowed rounded-3xl border border-white/20 shadow-xl bg-gradient-to-br from-white/20 via-white/5 to-white/10 cursor-pointer hover:scale-105";
   const sectionCard =
     "w-full max-w-3xl bg-zinc-900 border border-stone-700 rounded-xl p-6 shadow ";
 
@@ -72,7 +72,11 @@ export default function Home() {
           buttonStyle={buttonStyle}
           sectionCard={sectionCard}
         />
-        <Stats buttonStyle={buttonStyle} sectionCard={sectionCard} />
+        <Stats
+          buttonStyle={buttonStyle}
+          sectionCard={sectionCard}
+          lettersGenerated={lettersGenerated}
+        />
       </main>
       <Footer />
     </>
