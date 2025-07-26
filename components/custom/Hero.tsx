@@ -9,10 +9,18 @@ export default function Hero({ lettersGenerated }: Props) {
   return (
     <div className="max-w-4xl mx-auto text-center space-y-4 w-full">
       <div className="flex flex-row items-center justify-center gap-3">
-        <h1 className="text-5xl sm:text-6xl font-bold text-white">CoverMe</h1>
-        <Image width={75} height={75} src="/logo.png" alt="CoverMe Logo" />
+        <h1 className="text-5xl sm:text-6xl font-bold text-white select-none">
+          CoverMe
+        </h1>
+        <Image
+          width={75}
+          height={75}
+          src="/logo.png"
+          alt="CoverMe Logo"
+          className="select-none"
+        />
       </div>
-      <h2 className="text-2xl">
+      <h2 className="text-2xl text-purple-600">
         {lettersGenerated
           ? `You've generated ${lettersGenerated} cover letters so far. Keep it up!`
           : "No cover letters generated. Let's get started!"}

@@ -18,7 +18,7 @@ export default function SectionCard({
   return (
     <section className="text-white rounded-lg">
       <div
-        className="flex items-center justify-between cursor-pointer rounded-lg p-2 hover:bg-white/10 transition-all duration-300"
+        className="flex items-center justify-between cursor-pointer rounded-lg p-2  transition-all duration-300"
         onClick={() => setIsOpen((prev) => !prev)}
       >
         <h2 className="text-xl font-semibold ">{title}</h2>

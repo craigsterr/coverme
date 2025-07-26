@@ -2,7 +2,12 @@ import { useState, useEffect } from "react";
 import { Sparkles } from "lucide-react"; // Add this at the top of your file
 import SectionCard from "./SectionCard";
 import confetti from "canvas-confetti";
-import { useResumeStore } from "@/components/custom/useResumeStore";
+import {
+  useResumeStore,
+  inputStyle,
+  textAreaStyle,
+  staticTextAreaStyle,
+} from "@/components/custom/useResumeStore";
 
 type Props = {
   summarizedText: string;
@@ -160,9 +165,7 @@ export default function Resume({
         {parsedText && (
           <div className="mt-4 mb-4">
             <h3 className="font-semibold mb-2">Parsed Resume Text</h3>
-            <pre className="text-sm bg-gray-800 p-3 rounded max-h-60 overflow-y-auto whitespace-pre-wrap">
-              {parsedText}
-            </pre>
+            <pre className={staticTextAreaStyle}>{parsedText}</pre>
             <p className="text-sm text-gray-400 mt-1">
               Length: {parsedText.length} characters
             </p>
@@ -198,7 +201,8 @@ export default function Resume({
               onChange={(e) => setSummarizedText(e.target.value)}
               maxLength={1000}
               rows={6}
-              className="w-full p-3 border border-gray-700 bg-gray-800 rounded-md text-sm"
+              spellCheck="false"
+              className={textAreaStyle}
             />
             <p className="text-sm text-gray-400 mt-1">
               {summarizedText.length} / 1000 characters
@@ -215,7 +219,7 @@ export default function Resume({
                   onChange={(e) => setFullNameInput(e.target.value)}
                   placeholder="Name"
                   maxLength={100}
-                  className="w-[100%] sm:w-sm p-2 border border-gray-700 bg-gray-800 rounded-md text-sm"
+                  className={inputStyle}
                 />
                 <button
                   className={buttonStyle}

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import SectionCard from "./SectionCard";
+import { inputStyle, textAreaStyle } from "@/components/custom/useResumeStore";
 
 type Job = {
   title: string;
@@ -25,6 +26,7 @@ export default function JobInput({
   const [jobTitleInput, setJobTitleInput] = useState<string>("");
   const [jobDescriptionInput, setJobDescriptionInput] = useState<string>("");
   const [companyNameInput, setCompanyNameInput] = useState<string>("");
+  const [jobLinkInput, setJobLinkInput] = useState<string>("");
 
   const handleSubmitJob = () => {
     const trimmedTitle = jobTitleInput.trim();
@@ -47,6 +49,31 @@ export default function JobInput({
     setAddNew(true);
   };
 
+  const handleFetchFromLink = async () => {
+    if (!jobLinkInput.includes("indeed.com")) {
+      alert("Please enter a valid Indeed job link.");
+      return;
+    }
+
+    try {
+      const response = await fetch(
+        `/api/fetch-indeed?url=${encodeURIComponent(jobLinkInput)}`
+      );
+      const data = await response.json();
+
+      if (data.description) {
+        setJobDescriptionInput(data.description);
+        setJobTitleInput(data.title || "");
+        setCompanyNameInput(data.company || "");
+      } else {
+        alert("Failed to extract job description.");
+      }
+    } catch (err) {
+      console.error("Error fetching job data:", err);
+      alert("Something went wrong.");
+    }
+  };
+
   return (
     <>
       {summarizedText && (
@@ -65,7 +92,7 @@ export default function JobInput({
               onChange={(e) => setJobTitleInput(e.target.value)}
               placeholder="Job Title (Optional)"
               maxLength={100}
-              className="w-full mb-2 p-2 border border-gray-700 bg-gray-800 rounded-md text-sm"
+              className={inputStyle + " mb-2"}
             />
             <input
               type="text"
@@ -73,7 +100,7 @@ export default function JobInput({
               onChange={(e) => setCompanyNameInput(e.target.value)}
               placeholder="Company Name (Optional)"
               maxLength={100}
-              className="w-full mb-2 p-2 border border-gray-700 bg-gray-800 rounded-md text-sm"
+              className={inputStyle + " mb-2"}
             />
             <textarea
               value={jobDescriptionInput}
@@ -81,7 +108,7 @@ export default function JobInput({
               placeholder="Paste full job description..."
               maxLength={4000}
               rows={6}
-              className="w-full p-2 border border-gray-700 bg-gray-800 rounded-md text-sm"
+              className={textAreaStyle}
             />
             <p className="text-sm text-gray-400 mt-1">
               {jobDescriptionInput.length} / 4000 characters
@@ -89,6 +116,23 @@ export default function JobInput({
             <button onClick={handleSubmitJob} className={`${buttonStyle} mt-3`}>
               Add Job
             </button>
+            {/* <p className="my-10 font-bold text-2xl">OR</p>
+            <p className="text-green-600 mb-4">
+              Step 3: Paste a job link (Indeed)
+            </p>
+            <div className="flex gap-2 mb-2">
+              <input
+                type="text"
+                value={jobLinkInput}
+                onChange={(e) => setJobLinkInput(e.target.value)}
+                placeholder="https://www.indeed.com/viewjob..."
+                maxLength={300}
+                className={inputStyle + " flex-1"}
+              />
+              <button onClick={handleFetchFromLink} className={buttonStyle}>
+                Fetch
+              </button>
+            </div> */}
           </SectionCard>
         </section>
       )}

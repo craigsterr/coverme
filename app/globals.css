@@ -48,6 +48,13 @@ body {
   font-style: italic;
   font-display: swap;
 }
+@font-face {
+  font-family: "Round 8";
+  src: url("/fonts/Round8.ttf");
+  font-weight: 900;
+  font-style: italic;
+  font-display: swap;
+}
 
 * {
   font-family: "Neue Haas Grotesk Display", sans-serif;

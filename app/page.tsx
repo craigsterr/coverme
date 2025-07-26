@@ -24,9 +24,9 @@ export default function Home() {
   const [addNew, setAddNew] = useState<boolean>(false);
 
   const buttonStyle =
-    "px-3 py-1 text-white rounded-md hover:bg-sky-900 transition-all disabled:opacity-50 disabled:cursor-not-allowed rounded-3xl border border-white/20 bg-gradient-to-br from-white/20 via-white/5 to-white/10 cursor-pointer hover:-translate-y-0.5 hover:-translate-x-0.5 active:translate-y-0 active:translate-x-0 hover:shadow-[4px_4px_0px_#000000] active:shadow-none transition duration-100 mx-1 border-2";
+    "px-3 py-1 text-white rounded-md hover:bg-red-500 transition-all disabled:opacity-50 disabled:cursor-not-allowed rounded-3xl border border-white/20  bg-gradient-to-br bg-purple-900 from-white/20 via-white/5 to-white/10 cursor-pointer hover:-translate-y-0.5 hover:-translate-x-0.5 active:translate-y-0 active:translate-x-0 hover:shadow-[4px_4px_0px_#000000] active:shadow-none transition duration-100 mx-1 border-2";
   const sectionCard =
-    "w-full max-w-3xl bg-zinc-900 border border-2 border-stone-700 rounded-xl p-6 shadow ";
+    "w-full max-w-3xl bg-zinc-900 border border border-stone-700 rounded-xl p-6 shadow ";
 
   useEffect(() => {
     const savedLettersGenerated = localStorage.getItem("letters-generated");
@@ -45,7 +45,7 @@ export default function Home() {
         <NavBar />
       </div>
 
-      <div className="mb-15"></div>
+      <div className="mb-10"></div>
       <main className="py-20 px-4 bg-stone-950 text-white min-h-screen items-center flex flex-col">
         <Hero lettersGenerated={lettersGenerated} buttonStyle={buttonStyle} />
         <Resume

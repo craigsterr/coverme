@@ -6,11 +6,7 @@ type Props = {
   sectionCard: string;
   lettersGenerated: number;
 };
-export default function Stats({
-  buttonStyle,
-  sectionCard,
-  lettersGenerated,
-}: Props) {
+export default function Stats({ buttonStyle, lettersGenerated }: Props) {
   const [dailyStreak, setDailyStreak] = useState(0);
   const [lastLoginTime, setLastLoginTime] = useState(0);
   const [dailyJobs, setDailyJobs] = useState(0);
@@ -109,8 +105,8 @@ export default function Stats({
 
   return (
     <>
-      <section className={`${sectionCard} bg-gray-900 text-white mt-8 `}>
-        <SectionCard title="Statistics">
+      <section className={`w-full max-w-3xl text-white mt-8 `}>
+        <SectionCard title="Statistics" defaultOpen={false}>
           <div className="space-y-3 mb-4">
             <div className="flex flex-col gap-5">
               <div className="flex gap-2 items-center">
