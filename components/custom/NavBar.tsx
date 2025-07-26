@@ -26,7 +26,7 @@ export default function NavBar() {
   return (
     <>
       <nav
-        className="fixed w-full sm:max-w-[75%] z-20 sm:mt-3 px-4 py-2 sm:rounded-3xl sm:border-2 bg-purple-600/50
+        className="fixed w-full sm:max-w-[75%] z-20 sm:mt-3 px-4 py-2 sm:rounded-3xl sm:border-2 
                 border-white/20 shadow-xl/50 bg-gradient-to-br from-white/20 via-white/5 to-white/10 backdrop-blur-md"
       >
         <div className="flex sm:flex-row justify-between max-w-7xl mx-auto z-30">
