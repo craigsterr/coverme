@@ -26,7 +26,6 @@ export default function JobInput({
   const [jobTitleInput, setJobTitleInput] = useState<string>("");
   const [jobDescriptionInput, setJobDescriptionInput] = useState<string>("");
   const [companyNameInput, setCompanyNameInput] = useState<string>("");
-  const [jobLinkInput, setJobLinkInput] = useState<string>("");
 
   const handleSubmitJob = () => {
     const trimmedTitle = jobTitleInput.trim();
@@ -47,31 +46,6 @@ export default function JobInput({
     }
 
     setAddNew(true);
-  };
-
-  const handleFetchFromLink = async () => {
-    if (!jobLinkInput.includes("indeed.com")) {
-      alert("Please enter a valid Indeed job link.");
-      return;
-    }
-
-    try {
-      const response = await fetch(
-        `/api/fetch-indeed?url=${encodeURIComponent(jobLinkInput)}`
-      );
-      const data = await response.json();
-
-      if (data.description) {
-        setJobDescriptionInput(data.description);
-        setJobTitleInput(data.title || "");
-        setCompanyNameInput(data.company || "");
-      } else {
-        alert("Failed to extract job description.");
-      }
-    } catch (err) {
-      console.error("Error fetching job data:", err);
-      alert("Something went wrong.");
-    }
   };
 
   return (
