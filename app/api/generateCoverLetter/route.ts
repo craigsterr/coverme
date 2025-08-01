@@ -28,6 +28,13 @@ export async function POST(req: Request) {
 
     const prompt = `Write a concise cover letter starting with "Dear Hiring Manager," without including name, address, or contact info. Use a warm, confident tone. Keep it between 200-300 words. Include only the letter body and a simple closing line: "Sincerely, [Candidate Name]". Avoid generic phrases and clichés. The letter should feel genuine, confident, and personable, with a clear connection to the company and role.
 
+    Write sentences under 15 words, with up to 3 sentences per paragraph unless needed.
+    Avoid very niche vocabulary unless in the source. Do not use C2-level Cambridge English words.
+    Keep the text easy to read at about an 8th-grade level (Flesch score ~70).
+    Be direct and concise, including only necessary details.
+    Minimize overusing “it” by naming the subject or using synonyms.
+    Limit sections to 3 paragraphs or 300 words; create subsections if longer.
+
     Candidate Summary:
     ${summary}
 

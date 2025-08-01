@@ -13,8 +13,8 @@ export default function Stats({ buttonStyle, lettersGenerated }: Props) {
   const [weeklyJobs, setWeeklyJobs] = useState(0);
   const [dailyGoal, setDailyGoal] = useState(10);
   const [dailyGoalInput, setDailyGoalInput] = useState(10);
-  const [weeklyGoal, setWeeklyGoal] = useState(70);
-  const [weeklyGoalInput, setWeeklyGoalInput] = useState(70);
+  // const [weeklyGoal, setWeeklyGoal] = useState(70);
+  // const [weeklyGoalInput, setWeeklyGoalInput] = useState(70);
 
   function formatTimeAgo(timestamp: number) {
     const diff = Date.now() - timestamp;
@@ -85,30 +85,30 @@ export default function Stats({ buttonStyle, lettersGenerated }: Props) {
       localStorage.getItem("weekly-jobs") || "0",
       10
     );
-    const storedWeeklyGoal = parseInt(
-      localStorage.getItem("weekly-goal") || "0",
-      10
-    );
+    // const storedWeeklyGoal = parseInt(
+    //   localStorage.getItem("weekly-goal") || "0",
+    //   10
+    // );
 
     setDailyJobs(storedDailyJobs);
     setDailyGoal(storedDailyGoal);
     setWeeklyJobs(storedWeeklyJobs);
-    setWeeklyGoal(storedWeeklyGoal);
+    // setWeeklyGoal(storedWeeklyGoal);
   }, []);
 
   useEffect(() => {
     localStorage.setItem("daily-jobs", dailyJobs.toString());
     localStorage.setItem("daily-goal", dailyGoal.toString());
     localStorage.setItem("weekly-jobs", weeklyJobs.toString());
-    localStorage.setItem("weekly-goal", weeklyGoal.toString());
-  }, [dailyJobs, dailyGoal, weeklyJobs, weeklyGoal]);
+    // localStorage.setItem("weekly-goal", weeklyGoal.toString());
+  }, [dailyJobs, dailyGoal, weeklyJobs]);
 
   return (
     <>
       <section className={`w-full max-w-3xl text-white mt-8 `}>
         <SectionCard title="Statistics" defaultOpen={false}>
-          <div className="space-y-3 mb-4">
-            <div className="flex flex-col gap-5">
+          <div className="space-y-3">
+            <div className="flex flex-col mb-4">
               <div className="flex gap-2 items-center">
                 <p>Today's goal: </p>
                 <input
@@ -126,23 +126,7 @@ export default function Stats({ buttonStyle, lettersGenerated }: Props) {
                   Submit
                 </button>
               </div>
-              <div className="flex gap-2 items-center mb-4">
-                <p>Weekly goal: </p>
-                <input
-                  type="text"
-                  value={weeklyGoalInput}
-                  onChange={(e) => setWeeklyGoalInput(parseInt(e.target.value))}
-                  placeholder="Job Title (Optional)"
-                  maxLength={100}
-                  className="p-1 border border-gray-700 bg-gray-800 rounded-md w-15"
-                />
-                <button
-                  className={buttonStyle}
-                  onClick={() => setWeeklyGoal(weeklyGoalInput)}
-                >
-                  Submit
-                </button>
-              </div>
+              <div className="flex gap-2 items-center" />
             </div>
             <div className="h-[1px] bg-white/20 mb-4" />
             <div className="flex flex-col sm:flex-row gap-4 sm:gap-2 items-center w-full">
@@ -201,36 +185,6 @@ export default function Stats({ buttonStyle, lettersGenerated }: Props) {
                 >
                   +
                 </button>
-              </div>
-            </div>
-            <div className="flex flex-col sm:flex-row gap-4 sm:gap-2 items-center justify-between w-full">
-              <div>
-                <div className="flex gap-2">
-                  🗓️
-                  <AnimatePresence mode="wait">
-                    <motion.p
-                      key={dailyJobs} // triggers animation on count change
-                      initial={{ opacity: 0, y: 6 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: -6 }}
-                      transition={{ duration: 0.2 }}
-                      className="text-lg font-semibold"
-                    >
-                      <span
-                        className={
-                          weeklyJobs < weeklyGoal / 2
-                            ? "text-red-400"
-                            : weeklyJobs >= weeklyGoal
-                            ? "text-green-400"
-                            : "text-yellow-400"
-                        }
-                      >
-                        {weeklyJobs}/{weeklyGoal}{" "}
-                      </span>
-                    </motion.p>
-                  </AnimatePresence>
-                  <span>jobs applied for this week</span>
-                </div>
               </div>
             </div>
             <div className="h-[1px] bg-white/20 mb-4" />

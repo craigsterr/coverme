@@ -49,24 +49,6 @@ export default function JobInput({
     setAddNew(true);
   };
 
-  const handlePasteJobDescription = async () => {
-    const clipboardText = await navigator.clipboard.readText();
-    setJobDescriptionInput(clipboardText);
-  };
-
-  // const handleFetchFromLink = async (link: string) => {
-  //   if (!link) alert("Please enter a link.");
-
-  //   const res = await fetch("/api/scrapeJobDescription", {
-  //     method: "POST",
-  //     body: JSON.stringify({ url: link }),
-  //   });
-
-  //   const data = await res.json();
-
-  //   console.log(data.text);
-  // };
-
   return (
     <>
       {summarizedText && (
@@ -107,12 +89,12 @@ export default function JobInput({
             <p className="text-sm text-gray-400 mt-1">
               {jobDescriptionInput.length} / 4000 characters
             </p>
-            <button
+            {/* <button
               onClick={handlePasteJobDescription}
               className={`${buttonStyle} mt-3`}
             >
               Paste Job Description
-            </button>
+            </button> */}
             <button onClick={handleSubmitJob} className={`${buttonStyle} mt-3`}>
               Add Job
             </button>
