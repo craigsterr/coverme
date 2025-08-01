@@ -2,8 +2,6 @@
 
 **CoverMe** is an AI-powered web app that generates personalized cover letters using your resume and a job description. Built with Next.js, Tailwind CSS, and OpenAI's GPT API, it helps job seekers create high-quality, tailored letters in seconds.
 
-![CoverMe Screenshot](link-to-screenshot-if-you-have-one)
-
 ## ✨ Features
 
 - Upload your **resume** and **job description**
