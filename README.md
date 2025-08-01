@@ -30,8 +30,7 @@
 
 ## 📷 Demo
 
-[Live Demo](https://coverme.vercel.app)  
-[Demo Video (optional)](https://link-if-you-have-one)
+[Live Demo](https://coverme.craigo.live)  
 
 ## 🛠️ Local Development
 
